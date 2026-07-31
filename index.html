@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Ayesha 🎀</title>
+
+<!-- Google Fonts: Poppins for body, Dancing Script for romantic headings -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== FLOATING BACKGROUND DECOR ===================== -->
+<div class="floating-decor" id="floatingDecor" aria-hidden="true"></div>
+
+<!-- ===================== SHARED EFFECTS CANVAS (balloon pops, candle wishes, heart bursts) ===================== -->
+<canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+<!-- ===================== OPENING SURPRISE POPUP ===================== -->
+<div class="popup-overlay" id="popupOverlay">
+  <canvas id="confettiCanvas"></canvas>
+  <div class="popup-card">
+    <div class="popup-sparkle">✨</div>
+    <p class="popup-text">HAPPY BIRTHDAY TO THE<br>BEST CAT MOM AND<br>THE BEST GIRL EVER <span class="heart-pulse">❤️</span></p>
+    <button class="btn-surprise" id="openSurpriseBtn">Open Your Surprise 🎁</button>
+  </div>
+</div>
+
+<!-- ===================== MUSIC CONTROL ===================== -->
+<div class="music-control" id="musicControl">
+  <button id="musicToggle" aria-label="Toggle background music">🎵</button>
+  <audio id="bgMusic" loop preload="none">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_d1718ab41b.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<!-- ===================== MAIN SITE (hidden until popup closes) ===================== -->
+<main id="siteContent" class="site-hidden">
+
+  <!-- ---------- HERO SECTION ---------- -->
+  <section class="section hero-section" id="hero">
+    <div class="hero-glow"></div>
+    <h1 class="hero-title">Happy 17th Birthday,<br>Ayesha <span class="heart-pulse">❤️</span></h1>
+    <p class="hero-subtitle">I hope today brings you as much happiness as you bring into my life.</p>
+    <div class="scroll-hint">
+      <span>scroll down</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- ---------- BALLOON POP SECTION ---------- -->
+  <section class="section balloons-section" id="balloons">
+    <h2 class="section-title">Pop a Balloon 🎈</h2>
+    <p class="balloons-hint">Tap each balloon to pop it</p>
+    <div class="balloons-field" id="balloonsField"></div>
+    <p class="balloons-progress" id="balloonsProgress"></p>
+  </section>
+
+  <!-- ---------- COMPLIMENTS SECTION ---------- -->
+  <section class="section compliments-section" id="compliments">
+    <h2 class="section-title">A Few Things That Are True</h2>
+    <div class="glass-card compliments-card">
+      <ul class="compliments-list">
+        <li>Happy 17th birthday to the prettiest girl ever.</li>
+        <li>Your smile can brighten even the worst days.</li>
+        <li>You're the sweetest, kindest, and most caring person I know.</li>
+        <li>You're an amazing cat mom.</li>
+        <li>Thank you for making my life happier just by being in it.</li>
+        <li>I hope this year gives you everything you've ever wished for.</li>
+        <li>Never stop being your beautiful self.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ---------- BIRTHDAY CAKE SECTION ---------- -->
+  <section class="section cake-section" id="cake">
+    <h2 class="section-title">Make a Wish <span class="heart-pulse">🕯️</span></h2>
+    <div class="cake-wrapper">
+      <div class="sparkle-field" id="sparkleField"></div>
+      <div class="cake">
+        <div class="candles" id="candles">
+          <button class="candle" data-lit="true" aria-label="Blow out candle 1"><div class="flame"></div></button>
+          <button class="candle" data-lit="true" aria-label="Blow out candle 2"><div class="flame"></div></button>
+          <button class="candle" data-lit="true" aria-label="Blow out candle 3"><div class="flame"></div></button>
+        </div>
+        <div class="cake-top">
+          <span class="cake-name">AYESHA</span>
+        </div>
+        <div class="cake-drip"></div>
+        <div class="cake-middle"></div>
+        <div class="cake-bottom"></div>
+        <div class="cake-plate"></div>
+      </div>
+    </div>
+    <p class="cake-caption" id="cakeCaption">Tap each candle to blow it out, close your eyes, and wish for something wonderful.</p>
+    <button class="btn-relight" id="relightBtn">Relight Candles 🔥</button>
+  </section>
+
+  <!-- ---------- MEMORY NOTES SECTION ---------- -->
+  <section class="section notes-section" id="notes">
+    <h2 class="section-title">A Little Scrapbook</h2>
+    <div class="notes-stack" id="notesStack">
+
+      <div class="sticky-note active" data-index="0">
+        <p>Hey, so I tried making this website for you. I know it isn't all that good because I didn't start early enough. I'm really sorry 😢</p>
+        <span class="note-tape"></span>
+      </div>
+
+      <div class="sticky-note" data-index="1">
+        <p>Happy 17th, my love. Now we're finally the same age, not for long though 😂❤️</p>
+        <span class="note-tape"></span>
+      </div>
+
+      <div class="sticky-note" data-index="2">
+        <p>You've been the best person in my entire life, and I'm sure everyone who knows you feels lucky to have you around too.</p>
+        <span class="note-tape"></span>
+      </div>
+
+      <div class="sticky-note" data-index="3">
+        <p>I hope you keep living happily and always stay exactly the way you are.</p>
+        <span class="note-tape"></span>
+      </div>
+
+      <div class="sticky-note" data-index="4">
+        <p>I hope we get to celebrate your next birthday together because I want to see you turn 18 so badly 😍</p>
+        <span class="note-tape"></span>
+      </div>
+
+      <div class="sticky-note" data-index="5">
+        <p>I hope you liked this slightly mid website made by me. Well, I didn't exactly make it alone. AI definitely helped me a lot 😂❤️</p>
+        <span class="note-tape"></span>
+      </div>
+
+      <div class="sticky-note" data-index="6">
+        <p>That's it from me, but I really hope you enjoyed this little surprise. Thank you for being you, because you're the only person I've ever loved this much. ❤️🥹</p>
+        <span class="note-tape"></span>
+      </div>
+
+    </div>
+
+    <div class="notes-controls">
+      <div class="notes-dots" id="notesDots"></div>
+      <button class="btn-next" id="nextNoteBtn">Next ➜</button>
+      <p class="notes-swipe-hint">swipe or tap a dot to jump between notes</p>
+    </div>
+  </section>
+
+  <!-- ---------- FINAL ENDING SECTION ---------- -->
+  <section class="section ending-section" id="ending">
+    <button class="glow-heart" id="glowHeart" aria-label="Tap for a surprise">❤</button>
+    <div class="ending-content">
+      <p class="ending-message">
+        I love you so much, my baby. I don't care that you're officially a whole adult now because you'll always be my baby. And yes, I know you're still scared of those chipkalis 😭❤️
+      </p>
+      <p class="ending-final">Happy Birthday ❤️</p>
+      <p class="ending-hint">(tap the heart)</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
