@@ -14,6 +14,33 @@
 </head>
 <body>
 
+<!-- ===================== BIRTHDAY COUNTDOWN OVERLAY ===================== -->
+<!-- Full-screen overlay shown until Aug 4, 2026, 12:00:00 AM IST. Blocks the
+     rest of the site until the countdown finishes (see script.js). -->
+<div class="countdown-overlay" id="countdownOverlay">
+  <div class="countdown-card">
+    <p class="countdown-label">Counting down to Ayesha's Birthday 🎂</p>
+    <div class="countdown-timer">
+      <div class="countdown-unit"><span id="cdDays">00</span><small>days</small></div>
+      <div class="countdown-unit"><span id="cdHours">00</span><small>hours</small></div>
+      <div class="countdown-unit"><span id="cdMinutes">00</span><small>minutes</small></div>
+      <div class="countdown-unit"><span id="cdSeconds">00</span><small>seconds</small></div>
+    </div>
+    <p class="countdown-hint">The surprise unlocks soon...</p>
+  </div>
+</div>
+<script>
+  // Runs immediately during page parsing (before script.js) so that if the
+  // target moment has already passed, the countdown never even flashes on
+  // screen before being hidden.
+  (function () {
+    var countdownTargetTime = Date.UTC(2026, 7, 3, 18, 30, 0); // Aug 4 2026 00:00:00 IST
+    if (Date.now() >= countdownTargetTime) {
+      document.getElementById('countdownOverlay').style.display = 'none';
+    }
+  })();
+</script>
+
 <!-- ===================== FLOATING BACKGROUND DECOR ===================== -->
 <div class="floating-decor" id="floatingDecor" aria-hidden="true"></div>
 
@@ -44,6 +71,7 @@
   <!-- ---------- HERO SECTION ---------- -->
   <section class="section hero-section" id="hero">
     <div class="hero-glow"></div>
+    <span class="hidden-cat" data-cat="1" style="top: 10%; left: 7%;" aria-label="Find the hidden cat">🐱</span>
     <h1 class="hero-title">Happy 17th Birthday,<br>Ayesha <span class="heart-pulse">❤️</span></h1>
     <p class="hero-subtitle">I hope today brings you as much happiness as you bring into my life.</p>
     <div class="scroll-hint">
@@ -54,6 +82,7 @@
 
   <!-- ---------- BALLOON POP SECTION ---------- -->
   <section class="section balloons-section" id="balloons">
+    <span class="hidden-cat" data-cat="2" style="top: 8%; right: 6%;" aria-label="Find the hidden cat">🐱</span>
     <h2 class="section-title">Pop a Balloon 🎈</h2>
     <p class="balloons-hint">Tap each balloon to pop it</p>
     <div class="balloons-field" id="balloonsField"></div>
@@ -62,6 +91,7 @@
 
   <!-- ---------- COMPLIMENTS SECTION ---------- -->
   <section class="section compliments-section" id="compliments">
+    <span class="hidden-cat" data-cat="3" style="bottom: 6%; left: 5%;" aria-label="Find the hidden cat">🐱</span>
     <h2 class="section-title">A Few Things That Are True</h2>
     <div class="glass-card compliments-card">
       <ul class="compliments-list">
@@ -78,6 +108,7 @@
 
   <!-- ---------- BIRTHDAY CAKE SECTION ---------- -->
   <section class="section cake-section" id="cake">
+    <span class="hidden-cat" data-cat="4" style="top: 5%; right: 8%;" aria-label="Find the hidden cat">🐱</span>
     <h2 class="section-title">Make a Wish <span class="heart-pulse">🕯️</span></h2>
     <div class="cake-wrapper">
       <div class="sparkle-field" id="sparkleField"></div>
@@ -102,6 +133,7 @@
 
   <!-- ---------- MEMORY NOTES SECTION ---------- -->
   <section class="section notes-section" id="notes">
+    <span class="hidden-cat" data-cat="5" style="bottom: 7%; right: 5%;" aria-label="Find the hidden cat">🐱</span>
     <h2 class="section-title">A Little Scrapbook</h2>
     <div class="notes-stack" id="notesStack">
 
@@ -156,12 +188,21 @@
       <p class="ending-message">
         I love you so much, my baby. I don't care that you're officially a whole adult now because you'll always be my baby. And yes, I know you're still scared of those chipkalis 😭❤️
       </p>
+      <p class="cats-progress" id="catsProgressText">Find 0/5 cats to unlock the final message</p>
       <p class="ending-final">Happy Birthday ❤️</p>
-      <p class="ending-hint">(tap the heart)</p>
     </div>
   </section>
 
 </main>
+
+<!-- ===================== HIDDEN SECRET MESSAGE (unlocked by finding all 5 cats) ===================== -->
+<div class="secret-popup-overlay" id="secretPopupOverlay">
+  <div class="secret-popup-card">
+    <div class="popup-sparkle">🐱✨</div>
+    <p class="secret-popup-text">Yayaya, you found all of the cats! A grown-ass 17-year-old garl. Mhwahhmaw, I lowe you sm, and I'm so happy it's your birthday. I lowe you sm, and I lowe your smile sm. I hope you enjoy your bday all day and keep being the girl you are 😍😍😍😍😍, full kind and nice towards others ewen if they aren't. And I hope when you turn 18, I can be there to kucpuchu your cheeks masti se 😍😍😍😍😍. And don't ewer think bad of yourself, because you're the greatest of all time, full goat girl in ewery way. You're much more beautiful than anyone. You're much more intelligent than others, and you're much kinder towards others. You're the best person owerall, and I hope I get to be your bf on ewery birthday of yours ❤️❤️😘😘💕💕😍😍😊😊🤣</p>
+    <button class="btn-surprise" id="closeSecretBtn">Close ❤️</button>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
