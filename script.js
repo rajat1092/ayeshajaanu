@@ -9,6 +9,65 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* -----------------------------------------------------
+     0. BIRTHDAY COUNTDOWN OVERLAY
+     Counts down to Aug 4, 2026, 12:00:00 AM IST. If that
+     moment has already passed, the inline script in
+     index.html has already hidden the overlay (display:
+     none) before this ever runs, so we just skip it here.
+  ----------------------------------------------------- */
+  const countdownOverlay = document.getElementById('countdownOverlay');
+  const countdownTargetTime = Date.UTC(2026, 7, 3, 18, 30, 0); // Aug 4 2026 00:00:00 IST
+
+  if (countdownOverlay && countdownOverlay.style.display !== 'none') {
+    const cdDays = document.getElementById('cdDays');
+    const cdHours = document.getElementById('cdHours');
+    const cdMinutes = document.getElementById('cdMinutes');
+    const cdSeconds = document.getElementById('cdSeconds');
+
+    const pad = (n) => String(n).padStart(2, '0');
+
+    let countdownInterval = null;
+
+    function finishCountdown() {
+      clearInterval(countdownInterval);
+
+      // A little burst of confetti across the screen to celebrate
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      burstAt(w * 0.2, h * 0.3, 45);
+      burstAt(w * 0.5, h * 0.18, 45);
+      burstAt(w * 0.8, h * 0.3, 45);
+
+      countdownOverlay.classList.add('countdown-fade-out');
+      setTimeout(() => {
+        countdownOverlay.style.display = 'none';
+      }, 900);
+    }
+
+    function tickCountdown() {
+      const remaining = countdownTargetTime - Date.now();
+
+      if (remaining <= 0) {
+        cdDays.textContent = '00';
+        cdHours.textContent = '00';
+        cdMinutes.textContent = '00';
+        cdSeconds.textContent = '00';
+        finishCountdown();
+        return;
+      }
+
+      const totalSeconds = Math.floor(remaining / 1000);
+      cdDays.textContent = pad(Math.floor(totalSeconds / 86400));
+      cdHours.textContent = pad(Math.floor((totalSeconds % 86400) / 3600));
+      cdMinutes.textContent = pad(Math.floor((totalSeconds % 3600) / 60));
+      cdSeconds.textContent = pad(totalSeconds % 60);
+    }
+
+    tickCountdown();
+    countdownInterval = setInterval(tickCountdown, 1000);
+  }
+
+  /* -----------------------------------------------------
      1. FLOATING BACKGROUND DECOR (hearts, stars, sparkles)
   ----------------------------------------------------- */
   const decorContainer = document.getElementById('floatingDecor');
@@ -440,5 +499,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     isPlaying = !isPlaying;
   });
+
+  /* -----------------------------------------------------
+     10. HIDDEN CAT HUNT
+     Five 🐱 emojis hidden around the site. Each can only
+     be clicked once; finding all five unlocks the secret
+     final message below.
+  ----------------------------------------------------- */
+  const hiddenCats = document.querySelectorAll('.hidden-cat');
+  const catsProgressText = document.getElementById('catsProgressText');
+  const TOTAL_CATS = hiddenCats.length;
+  let catsFound = 0;
+
+  function updateCatsProgress() {
+    if (catsProgressText) {
+      catsProgressText.textContent = `Find ${catsFound}/${TOTAL_CATS} cats to unlock the final message`;
+    }
+  }
+
+  hiddenCats.forEach(cat => {
+    cat.addEventListener('click', () => {
+      if (cat.classList.contains('found')) return;
+      cat.classList.add('found');
+
+      // tiny celebration burst right where the cat was found
+      const rect = cat.getBoundingClientRect();
+      burstAt(rect.left + rect.width / 2, rect.top + rect.height / 2, 16);
+
+      catsFound++;
+      updateCatsProgress();
+
+      if (catsFound === TOTAL_CATS) {
+        setTimeout(showSecretMessage, 500);
+      }
+    });
+  });
+
+  updateCatsProgress();
+
+  /* -----------------------------------------------------
+     11. FINAL SECRET MESSAGE (unlocked by the cat hunt)
+  ----------------------------------------------------- */
+  const secretPopupOverlay = document.getElementById('secretPopupOverlay');
+  const closeSecretBtn = document.getElementById('closeSecretBtn');
+
+  function showSecretMessage() {
+    if (!secretPopupOverlay) return;
+    secretPopupOverlay.classList.add('visible');
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    burstAt(w * 0.25, h * 0.25, 40);
+    burstAt(w * 0.5, h * 0.12, 40);
+    burstAt(w * 0.75, h * 0.25, 40);
+  }
+
+  if (closeSecretBtn) {
+    closeSecretBtn.addEventListener('click', () => {
+      secretPopupOverlay.classList.remove('visible');
+    });
+  }
 
 });
