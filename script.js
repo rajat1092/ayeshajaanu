@@ -410,7 +410,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   /* -----------------------------------------------------
-     8. ENDING HEART — tap for one last burst of hearts
+     8. LOVE LETTER ENVELOPE — tap to open, tap again to close
+  ----------------------------------------------------- */
+  const envelope = document.getElementById('envelope');
+  const endingSection = document.getElementById('ending');
+  let letterOpen = false;
+  let envelopeCloseTimer = null;
+
+  envelope.addEventListener('click', () => {
+    if (!letterOpen) {
+      // ----- OPEN -----
+      letterOpen = true;
+      clearTimeout(envelopeCloseTimer); // in case it was mid-way through closing
+      envelope.classList.remove('envelope-closing');
+      envelope.classList.add('opened');
+      envelope.setAttribute('aria-label', 'Close your love letter');
+
+      // heart/confetti burst right above the envelope as it opens
+      const rect = envelope.getBoundingClientRect();
+      burstAt(rect.left + rect.width / 2, rect.top, 40);
+
+      // give the open + letter-slide-up animation time to finish, then glide
+      // down to the final section
+      setTimeout(() => {
+        
+      }, 1100);
+
+    } else {
+      // ----- CLOSE -----
+      // 'envelope-closing' keeps the letter fully visible while it slides
+      // back down; only once that animation has finished do we re-seal the
+      // envelope (overflow: hidden) so nothing gets clipped mid-motion.
+      letterOpen = false;
+      envelope.classList.add('envelope-closing');
+      envelope.classList.remove('opened');
+      envelope.setAttribute('aria-label', 'Open your love letter');
+
+      envelopeCloseTimer = setTimeout(() => {
+        envelope.classList.remove('envelope-closing');
+      }, 1150);
+    }
+  });
+
+  /* -----------------------------------------------------
+     9. ENDING HEART — tap for one last burst of hearts
   ----------------------------------------------------- */
   const glowHeart = document.getElementById('glowHeart');
 
@@ -420,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* -----------------------------------------------------
-     9. BACKGROUND MUSIC TOGGLE (no autoplay)
+     10. BACKGROUND MUSIC TOGGLE (no autoplay)
   ----------------------------------------------------- */
   const musicToggle = document.getElementById('musicToggle');
   const bgMusic = document.getElementById('bgMusic');
